@@ -70,7 +70,7 @@ PROMPT="
 %{$fg[green]%}$(box_name) \
 %{$fg[white]%}in \
 %{$fg[blue]%}${VENV}\
-%{$terminfo[bold]$fg[yellow]%}${VENV}[${current_dir}]%{$reset_color%} \
+%{$terminfo[bold]$fg[yellow]%}[${current_dir}]%{$reset_color%} \
 ${hg_info} \
 ${git_info} \
 ${git_last_commit}
