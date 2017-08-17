@@ -12,6 +12,23 @@ function box_name {
     [ -f ~/.box-name ] && cat ~/.box-name || echo $HOST
 }
 
+# Virtualenv info
+function virtualenv_info(){
+    # Get Virtual Env
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        # Strip out the path and just leave the env name
+        venv="${VIRTUAL_ENV##*/}"
+    else
+        # In case you don't have one activated
+        venv=''
+    fi
+    [[ -n "$venv" ]] && echo "(venv:$venv) "
+}
+
+# disable the default virtualenv prompt change
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+local VENV="\$(virtualenv_info)";
+
 # Directory info.
 local current_dir='${PWD/#$HOME/~}'
 
@@ -52,7 +69,8 @@ PROMPT="
 %{$fg[white]%}at \
 %{$fg[green]%}$(box_name) \
 %{$fg[white]%}in \
-%{$terminfo[bold]$fg[yellow]%}[${current_dir}]%{$reset_color%} \
+%{$fg[blue]%}${VENV}\
+%{$terminfo[bold]$fg[yellow]%}${VENV}[${current_dir}]%{$reset_color%} \
 ${hg_info} \
 ${git_info} \
 ${git_last_commit}
@@ -67,6 +85,7 @@ PROMPT="
 %{$fg[white]%}at \
 %{$fg[green]%}$(box_name) \
 %{$fg[white]%}in \
+%{$fg[blue]%}${VENV}\
 %{$terminfo[bold]$fg[yellow]%}[${current_dir}]%{$reset_color%}\
 ${hg_info}\
 ${git_info}
